@@ -16,6 +16,12 @@
 - **Strategy**: *CBM* - MONET
     - Run the following jupyter notebook: `MONET/scr_CBM_MONET.ipynb`
 
+- **Strategy**: *GPT-CBM* - CLIP Models (ViT-B-16)
+    - Run the following jupyter notebook: `CLIP/scr_GPT-CBM_CLIP.ipynb`
+
+- **Strategy**: *GPT-CBM* - MONET
+    - Run the following jupyter notebook: `MONET/scr_GPT-CBM_MONET.ipynb`
+
 ---
 
 
