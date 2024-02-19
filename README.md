@@ -1,6 +1,6 @@
 # Towards Concept-based Interpretability of Skin Lesion Diagnosis using Vision-Language Models
 
-Paper accepted at IEEE International Symposium on Biomedical Imaging - ISBI 2024.
+[Paper](https://arxiv.org/abs/2311.14339) accepted at IEEE International Symposium on Biomedical Imaging - ISBI 2024.
 
 <img title="ISBI 2024" alt="Towards Concept-based Interpretability of Skin Lesion Diagnosis using Vision-Language Models" src="assets/model_architecture.png">
 
@@ -20,11 +20,11 @@ If you use this repository, please cite:
 ```
 
 ## 1. Download data
-- **PH $^2$** dataset: https://www.fc.up.pt/addi/ph2%20database.html (Masks)
-- **Derm7pt** dataset: https://derm.cs.sfu.ca/Welcome.html (Masks) 
-- **ISIC 2018** (Task 3) dataset: https://challenge.isic-archive.com/data/#2018 (Masks)
+- **PH $^2$** dataset: https://www.fc.up.pt/addi/ph2%20database.html
+- **Derm7pt** dataset: https://derm.cs.sfu.ca/Welcome.html
+- **ISIC 2018** (Task 3) dataset: https://challenge.isic-archive.com/data/#2018
 
-**Note:** *You should mask out the original images of each dataset with the available masks (download links above) in order to reproduce the results of the paper.*
+**Note:** *You should mask out the original images of each dataset with the available masks (download masks [here](https://ubipt-my.sharepoint.com/:u:/g/personal/cristiano_patricio_ubi_pt/EaYoENWGK3ZLvmMCrOgp6qcBu7v9-hK__lGr4yuKpkneVA?e=ywBfty)) in order to reproduce the results of the paper.*
 
 
 ## 2. Training 
