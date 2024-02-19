@@ -161,20 +161,13 @@ if __name__ == '__main__':
 
     metrics_dict = dict()
 
-
-    # ['ViT-B-32', 'ViT-B-16', 'RN50', 'RN101', 'ViT-L-14', 'RN50x16']
-    baseline_42 = [0.627, 0.634, 0.653, 0.610, 0.630, 0.637]
-
     # Iterate over models
     for idx, m in enumerate(MODEL):
         bacc_acum = []
         for s in SEED:
-            if s == 42:
-                bacc_acum.append(baseline_42[idx])
-            else:
-                results = calculate_similarity(MODEL=m, CLASS_LABELS_PROMPTS=CLASS_LABELS_PROMPTS, SEED=s)
-                bacc = evaluate(results_dict=results)
-                bacc_acum.append(bacc)
+            results = calculate_similarity(MODEL=m, CLASS_LABELS_PROMPTS=CLASS_LABELS_PROMPTS, SEED=s)
+	    bacc = evaluate(results_dict=results)
+	    bacc_acum.append(bacc)
 
         metrics_dict[m] = bacc_acum
 

@@ -88,12 +88,12 @@ def calculate_similarity(DATASET, MODEL, CLASS_LABELS_PROMPTS):
 
 def evaluate(results_dict, fold):
     # Evaluation
-    gt = pd.read_csv("../data/PH2_dataset.csv")
+    gt = pd.read_csv("../data/PH2/PH2_dataset.csv")
 
-    valiadtion_images_df = pd.read_csv(f"../data/PH2_train_split_{fold}.csv")
+    valiadtion_images_df = pd.read_csv(f"../data/PH2/PH2_train_split_{fold}.csv")
     validation_images = valiadtion_images_df["images"].tolist()
 
-    test_images_df = pd.read_csv(f"../data/PH2_test_split_{fold}.csv")
+    test_images_df = pd.read_csv(f"../data/PH2/PH2_test_split_{fold}.csv")
     test_images = test_images_df["images"].tolist()
 
     y_true_val = []

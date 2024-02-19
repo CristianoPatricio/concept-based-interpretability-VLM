@@ -225,21 +225,15 @@ if __name__ == '__main__':
 
     SEED = [0, 42, 84, 168]
 
-    # ['ViT-B-32', 'ViT-B-16', 'RN50', 'RN101', 'ViT-L-14', 'RN50x16']
-    gpt_cbm_42 = [0.702, 0.730, 0.713, 0.656, 0.664, 0.729]
-
     metrics_dict = dict()
 
     # Iterate over models
     for idx, m in enumerate(MODEL):
         bacc_acum = []
         for s in SEED:
-            if s == 42:
-                bacc_acum.append(gpt_cbm_42[idx])
-            else:
-                results = calculate_similarity(MODEL=m, DETAILED_CONCEPT_PROMPTS=DETAILED_CONCEPT_PROMPTS, SEED=s)
-                bacc = evaluate(results_dict=results)
-                bacc_acum.append(bacc)
+            results = calculate_similarity(MODEL=m, DETAILED_CONCEPT_PROMPTS=DETAILED_CONCEPT_PROMPTS, SEED=s)
+            bacc = evaluate(results_dict=results)
+            bacc_acum.append(bacc)
 
         metrics_dict[m] = bacc_acum
 
