@@ -85,7 +85,7 @@ class CFG:
     dataset = 'ISIC_2018' # {'derm7pt', 'ISIC_2018'}
     # -------------------------------------------------------------------------- #
 
-    seed = 168
+    seed = 42
     batch_size = 32
     num_workers = 4
     head_lr = 1e-5
@@ -97,8 +97,8 @@ class CFG:
     epochs = 100
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    image_embedding = 1024
-    text_embedding = 1024
+    image_embedding = 512
+    text_embedding = 512
     max_length = 200
     temperature = 1.0
 
@@ -107,7 +107,7 @@ class CFG:
 
     # for projection head; used for both image and text encoders
     num_projection_layers = 1
-    projection_dim = 1024
+    projection_dim = 512
     dropout = 0.2
 
     # model path best model

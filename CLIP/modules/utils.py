@@ -129,6 +129,28 @@ def get_text_embeddings(config, caption, model_path):
 
     return model, torch.cat(test_text_embeddings).detach().cpu().numpy()
 
+def get_img_embeds_from_pretrained_model(raw_image, clip_model, model_path, device):
+    # Extract image embeddings from original CLIP
+    model, preprocess = clip.load(clip_model, device=device)
+
+    # Load and Preprocess input
+    image = preprocess(raw_image).unsqueeze(0).to(device)
+
+    # Get features
+    with torch.no_grad():
+        image_features = model.encode_image(image)
+
+    image_features /= image_features.norm(dim=-1, keepdim=True)
+
+    model = CLIPModel().to(device)
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.eval()
+
+    with torch.no_grad():
+        image_embeddings = model.image_projection(image_features.type(torch.float32).to(device))
+        image_embeddings /= image_embeddings.norm(dim=-1, keepdim=True)
+
+    return model, image_embeddings.detach().cpu().squeeze().numpy()
 
 def extract_custom_text_embeddings(config, model, type_of_text):
     """
@@ -278,3 +300,48 @@ def extract_image_embeddings(config, model, preprocess):
         img_embeddings[img_name] = image_features.cpu().detach().numpy().flatten()
 
     return img_embeddings
+
+def calculate_similarity_score(image_features_norm,
+                               prompt_target_embedding_norm,
+                               prompt_ref_embedding_norm,
+                               temp=1,
+                               top_k=-1,
+                               normalize=True):
+    """
+    Similarity Score used in "Fostering transparent medical image AI via an image-text foundation model grounded in medical literature"
+    https://www.medrxiv.org/content/10.1101/2023.06.07.23291119v1.full.pdf
+    """
+
+    target_similarity = prompt_target_embedding_norm.float() @ image_features_norm.T.float()
+    ref_similarity = prompt_ref_embedding_norm.float() @ image_features_norm.T.float()
+
+    if top_k > 0:
+        idx_target = target_similarity.argsort(dim=1, descending=True)
+        target_similarity_mean = target_similarity[:, idx_target.squeeze()[:top_k]].mean(dim=1)
+
+        ref_similarity_mean = ref_similarity.mean(dim=1)
+    else:
+        target_similarity_mean = target_similarity.mean(dim=1)
+        ref_similarity_mean = ref_similarity.mean(dim=1)
+
+    if normalize:
+        similarity_score = scipy.special.softmax([target_similarity_mean.numpy(), ref_similarity_mean.numpy()], axis=0)[
+                           0, :].mean(axis=0)
+    else:
+        similarity_score = target_similarity_mean.mean(axis=0)
+
+    return similarity_score
+
+
+
+def print_preds_align_with_concepts(concept_predictions):
+    print(f"Asymmetry: {concept_predictions[0]:.2f}\n",
+            f"Irregular: {concept_predictions[1]:.2f}\n",
+            f"Erosion: {concept_predictions[2]:.2f}\n",
+            f"Black: {concept_predictions[3]:.2f}\n",
+            f"Blue: {concept_predictions[4]:.2f}\n",
+            f"White: {concept_predictions[5]:.2f}\n",
+            f"Brown: {concept_predictions[6]:.2f}\n",
+            f"Multiple Colors: {concept_predictions[7]:.2f}\n",
+            f"Tiny: {concept_predictions[8]:.2f}\n",
+            f"Regular: {concept_predictions[9]:.2f}\n")
