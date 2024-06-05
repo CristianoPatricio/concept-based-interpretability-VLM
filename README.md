@@ -1,6 +1,6 @@
-# Towards Concept-based Interpretability of Skin Lesion Diagnosis using Vision-Language Models [Oral]
+# Towards Concept-based Interpretability of Skin Lesion Diagnosis using Vision-Language Models
 
-[Paper](https://arxiv.org/abs/2311.14339) accepted at IEEE International Symposium on Biomedical Imaging - ISBI 2024.
+[Paper](https://arxiv.org/abs/2311.14339) accepted at IEEE International Symposium on Biomedical Imaging - ISBI 2024 (Oral).
 
 <img title="ISBI 2024" alt="Towards Concept-based Interpretability of Skin Lesion Diagnosis using Vision-Language Models" src="assets/model_architecture.png">
 
